@@ -1,5 +1,6 @@
 /* Controller : Xử lý logic, tính toán & liên kết model với view */
 const Product = require("../../models/product.model");
+// [GET] /products
 module.exports.index = async (req, res) => { // index là tên hàm thể hiện trang chính của "trang sản phẩm"
   const products = await Product.find({ // Truy vấn tất cả document ở trong collection products
     status: "active",
