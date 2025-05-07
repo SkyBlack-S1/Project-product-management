@@ -1,4 +1,4 @@
-//--------------- Xử lý phía FE --------------//
+// [------------------- Xử lý phía FE -------------------] //
 /* Button Status */
 const buttonStatus = document.querySelectorAll("[button-status]"); // thuộc tính tự định nghĩa nên cần []
 if(buttonStatus.length > 0) {
@@ -39,3 +39,21 @@ if(formSearch) {
 }
 
 /* End Form Search */
+
+/* Button Pagination */
+const buttonsPagination = document.querySelectorAll("[button-pagination]");
+if(buttonsPagination) {
+  let url = new URL(window.location.href);
+
+  buttonsPagination.forEach(button => {
+    button.addEventListener("click", () => {
+      const page = button.getAttribute("button-pagination");
+      
+      
+      url.searchParams.set("page", page);
+      window.location.href = url.href;
+    })
+  })
+}
+
+/* End Button Pagination */
