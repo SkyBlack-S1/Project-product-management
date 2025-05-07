@@ -1,4 +1,4 @@
-// Xử lý phía FE
+//--------------- Xử lý phía FE --------------//
 /* Button Status */
 const buttonStatus = document.querySelectorAll("[button-status]"); // thuộc tính tự định nghĩa nên cần []
 if(buttonStatus.length > 0) {
@@ -26,7 +26,7 @@ if(formSearch) {
   let url = new URL(window.location.href);
   formSearch.addEventListener("submit", (e) => {
     e.preventDefault(); // ngăn chặn sự kiện mặc định khi submit form (tránh load lại trang) | -> kết hợp với bộ lọc để tìm kiếm
-    const keyword = e.target.elements.keyword.value;
+    const keyword = e.target.elements.keyword.value; // lấy keyword người dùng nhập vào
 
     if(keyword) {
       url.searchParams.set("keyword", keyword); // searchParams là phần sau dấu "?"
