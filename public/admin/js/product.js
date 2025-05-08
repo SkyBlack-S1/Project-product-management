@@ -13,9 +13,9 @@ if(buttonChangeStatus.length > 0) {
 
       let statusChange = statusCurrent == "active" ? "inactive" : "active";
 
-      console.log(statusCurrent);
-      console.log(id);
-      console.log(statusChange);
+      // console.log(statusCurrent);
+      // console.log(id);
+      // console.log(statusChange);
 
       const action = path + `/${statusChange}/${id}?_method=PATCH`; // gửi lên là PATCH để không cho phép User chỉnh sửa
       formChangeStatus.action = action;

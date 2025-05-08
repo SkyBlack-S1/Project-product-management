@@ -1,3 +1,4 @@
+// [------------------- Xử lý phía BE -------------------] //
 const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filerStatus");
 const searchHelper = require("../../helpers/search");
@@ -49,17 +50,35 @@ module.exports.index = async (req, res) => {
 }
 
 /* Thay đổi trạng thái sản phẩm -> Update Database */
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
   
   await Product.updateOne({ _id: id }, { status: status });
 
-  const backURL = req.header('Referer');
+  const backURL = req.header('Referer'); // Chuyển hướng sang trang trước đó
   res.redirect(backURL);
 }
 
+/* Thay đổi trạng thái [nhiều] sản phẩm -> Update Database */
+// [PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+  const type = req.body.type;
+  const ids = req.body.ids.split(", "); // chuyển thành mảng
+  switch (type) {
+    case "active":
+      await Product.updateMany( { _id: { $in: ids } }, { status: "active" } );
+      break;
+    case "inactive":
+      await Product.updateMany( { _id: { $in: ids } }, { status: "inactive" } );
+      break;
+    default:
+      break;
+  }
+  const backURL = req.header('Referer');
+  res.redirect(backURL);
+}
 
 
 /*

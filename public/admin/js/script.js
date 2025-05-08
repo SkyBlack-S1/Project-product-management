@@ -57,3 +57,67 @@ if(buttonsPagination) {
 }
 
 /* End Button Pagination */
+
+/* Checkbox Multi */
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti) {
+  const inputCheckAll = checkboxMulti.querySelector("input[name='checkall']");
+  const inputsId = checkboxMulti.querySelectorAll("input[name='id']");
+
+  // Tick / bỏ tick tất cả
+  inputCheckAll.addEventListener("click", () => {
+    if(inputCheckAll.checked == true){
+      inputsId.forEach(input => {
+        input.checked = true;
+      });
+    } else {
+      inputsId.forEach(input => {
+        input.checked = false;
+      });
+    }
+  });
+
+  inputsId.forEach(input => {
+    input.addEventListener("click", () => {
+      const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length; // Đếm số ô đã Tick
+      // console.log(countChecked);
+      // console.log(inputsId.length);
+      if(countChecked == inputsId.length) {
+        inputCheckAll.checked = true;
+      } else {
+        inputCheckAll.checked = false;
+      }
+    });
+  });
+}
+/* End Checkbox Multi */
+
+/* Form Change Multi */
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti) {
+  formChangeMulti.addEventListener("submit", (e) => {
+    e.preventDefault(); // Ngăn hành động mặc định (load lại trang)
+    const checkboxMulti = document.querySelector("[checkbox-multi]");
+    const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
+
+    if(inputsChecked.length > 0) {
+      let ids = [];
+      const inputIds = formChangeMulti.querySelector("input[name='ids']");
+      
+      inputsChecked.forEach(input => {
+        const id = input.value;
+        ids.push(id);
+      });
+
+      inputIds.value = ids.join(", "); // chuyển sang string
+
+      formChangeMulti.submit();
+    } else {
+      alert("Vui lòng chọn ít nhất 1 bản ghi");
+    }
+  
+  });
+}
+
+
+/* End Form Change Multi */
