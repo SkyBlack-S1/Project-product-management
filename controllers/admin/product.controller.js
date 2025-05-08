@@ -47,3 +47,22 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination
   });
 }
+
+/* Thay đổi trạng thái sản phẩm -> Update Database */
+// [GET] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status;
+  const id = req.params.id;
+  
+  await Product.updateOne({ _id: id }, { status: status });
+
+  const backURL = req.header('Referer');
+  res.redirect(backURL);
+}
+
+
+
+/*
+Truy vấn... -> Doc Mongoose
+Cú pháp... -> Doc ExpressJS
+*/

@@ -1,5 +1,6 @@
 //- #{item.status}	Để hiển thị giá trị ra HTML
-//- item.status	Dùng trong code logic, if, each, attributes
+//- item.status	Dùng trong code logic, if, each, attributes (src, href...)
+//- ${item.status} Dùng để nối chuỗi
 extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
@@ -43,12 +44,33 @@ block main
                 td #{item.price}$
                 td
                   if(item.status == "active")
-                    a(href="#" class="badge badge-success") Hoạt động
+                    a(
+                      href="javascript:;" 
+                      data-status=item.status
+                      data-id=item.id
+                      button-change-status
+                      class="badge badge-success"
+                    ) Hoạt động
                   else
-                    a(href="#" class="badge badge-danger") Dừng Hoạt động
+                    a(
+                      href="javascript:;"
+                      data-status=item.status
+                      data-id=item.id 
+                      button-change-status 
+                      class="badge badge-danger"
+                    ) Dừng Hoạt động
                 td 
                   button(class="btn btn-warning btn-sm") Sửa
                   button(class="btn btn-danger btn-sm ml-1") Xóa
 
 
   +pagination(pagination)
+
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  )
+
+  script(src="/admin/js/product.js") 
