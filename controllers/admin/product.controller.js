@@ -84,6 +84,7 @@ module.exports.changeMulti = async (req, res) => {
         deleted: true, 
         deletedAt: new Date() 
       } );
+      req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
       break;
     
     case "change-position":
@@ -103,7 +104,7 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect(backURL);
 }
 
-/* Xóa sản phẩm (Xóa vĩnh viễn (cứng) hoặc xóa mềm) */
+/* Xóa 1 sản phẩm (Xóa vĩnh viễn (cứng) hoặc xóa mềm) */
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
@@ -113,6 +114,8 @@ module.exports.deleteItem = async (req, res) => {
     { _id: id }, 
     { deleted: true, deletedAt: new Date() }
   ); 
+
+  req.flash("success", `Đã xóa thành công sản phẩm!`);
 
   const backURL = req.header('Referer');
   res.redirect(backURL);
