@@ -5,7 +5,7 @@ module.exports.index = async (req, res) => { // index là tên hàm thể hiện
   const products = await Product.find({ // Truy vấn tất cả document ở trong collection products
     status: "active",
     deleted: false
-  }); 
+  }).sort({ position: "desc"}); 
 
   const newProducts = products.map(item => {
     item.priceNew = (item.price*(100 - 
