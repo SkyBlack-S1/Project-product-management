@@ -8,7 +8,7 @@ const paginationHelper = require("../../helpers/pagination");
 module.exports.index = async (req, res) => {
 
   let find = {
-    deleted: false
+    deleted: false // tức chưa bị xóa
   };
 
   /* Tính năng lọc theo trạng thái */
@@ -80,12 +80,17 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect(backURL);
 }
 
-/* Xóa sản phẩm (Xóa vĩnh viễn hay xóa cứng) */
+/* Xóa sản phẩm (Xóa vĩnh viễn (cứng) hoặc xóa mềm) */
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
-  await Product.deleteOne({ _id: id });
   
+  // await Product.deleteOne({ _id: id }); // xóa vĩnh viễn
+  await Product.updateOne( // xóa mềm
+    { _id: id }, 
+    { deleted: true, deletedAt: new Date() }
+  ); 
+
   const backURL = req.header('Referer');
   res.redirect(backURL);
 }
