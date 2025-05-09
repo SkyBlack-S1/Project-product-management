@@ -1,5 +1,5 @@
 // [------------------- Xử lý phía FE -------------------] //
-/* Button Status */
+/* Button Status ( Phần Bộ Lọc ) */
 const buttonStatus = document.querySelectorAll("[button-status]"); // thuộc tính tự định nghĩa nên cần []
 if(buttonStatus.length > 0) {
   let url = new URL(window.location.href); // Để sử dụng các hàm có sẵn của URL
@@ -20,7 +20,7 @@ if(buttonStatus.length > 0) {
 }
 /* End Button Status */
 
-/* Form Search */
+/* Form Search ( Phần Tìm Kiếm ) */
 const formSearch = document.querySelector("#form-search");
 if(formSearch) {
   let url = new URL(window.location.href);
@@ -37,10 +37,9 @@ if(formSearch) {
     window.location.href = url.href;
   });
 }
-
 /* End Form Search */
 
-/* Button Pagination */
+/* Button Pagination ( Phần Phân Trang ) */
 const buttonsPagination = document.querySelectorAll("[button-pagination]");
 if(buttonsPagination) {
   let url = new URL(window.location.href);
@@ -55,9 +54,9 @@ if(buttonsPagination) {
     })
   })
 }
-
 /* End Button Pagination */
 
+/* --------- Thay đổi trạng thái nhiều sản phẩm --------- */
 /* Checkbox Multi */
 const checkboxMulti = document.querySelector("[checkbox-multi]");
 if(checkboxMulti) {
@@ -118,6 +117,5 @@ if(formChangeMulti) {
   
   });
 }
-
-
 /* End Form Change Multi */
+/* --------- End Thay đổi trạng thái nhiều sản phẩm --------- */

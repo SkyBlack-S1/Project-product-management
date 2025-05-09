@@ -80,8 +80,22 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect(backURL);
 }
 
+/* Xóa sản phẩm (Xóa vĩnh viễn hay xóa cứng) */
+// [DELETE] /admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+  await Product.deleteOne({ _id: id });
+  
+  const backURL = req.header('Referer');
+  res.redirect(backURL);
+}
 
-/*
+
+
+/* Note
 Truy vấn... -> Doc Mongoose
 Cú pháp... -> Doc ExpressJS
+- Đường dẫn
++ Truyền thằng đường dẫn khi không có biến động
++ Nối chuỗi khi có biến động (id, status...)
 */
