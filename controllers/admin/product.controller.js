@@ -58,6 +58,8 @@ module.exports.changeStatus = async (req, res) => {
   
   await Product.updateOne({ _id: id }, { status: status });
 
+  req.flash("success", "Cập nhật trạng thái thành công!");
+
   const backURL = req.header('Referer'); // Chuyển hướng sang trang trước đó
   res.redirect(backURL);
 }
@@ -70,9 +72,11 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany( { _id: { $in: ids } }, { status: "active" } ); // chỉ dùng được khi nhiều sản phẩm (id) có cùng status
+      req.flash("success", `Cập nhật thành công trạng thái của ${ids.length} sản phẩm!`);
       break;
     case "inactive":
       await Product.updateMany( { _id: { $in: ids } }, { status: "inactive" } );
+      req.flash("success", `Cập nhật thành công trạng thái của ${ids.length} sản phẩm!`);
       break;
     
     case "delete-all":
