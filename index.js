@@ -35,7 +35,7 @@ app.use(flash());
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục chỉ tồn tại trong tất cả file .pug
 
 // Trong file Public -> Người dùng có thể truy cập
-app.use(express.static("public"));
+app.use(express.static("public")); // Trong file pug chỉ cần "/" là sẽ đi vào folder "public/"
 
 // Routes
 indexRoute(app);

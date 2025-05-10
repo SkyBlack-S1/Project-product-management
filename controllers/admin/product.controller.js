@@ -144,6 +144,8 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
+  req.body.thumbnail = `/uploads/${req.file.filename}`;
+
   const product = new Product(req.body); // Tạo mới 1 sản phẩm
   await product.save(); // Lưu vào database
 
