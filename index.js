@@ -32,7 +32,7 @@ app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
 // App Locals Variables
-app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục, tồn tại trong tất cả file .pug
+app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục chỉ tồn tại trong tất cả file .pug
 
 // Trong file Public -> Người dùng có thể truy cập
 app.use(express.static("public"));

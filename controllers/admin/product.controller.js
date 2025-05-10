@@ -1,5 +1,6 @@
 // [------------------- Xử lý phía BE -------------------] //
 const Product = require("../../models/product.model");
+const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filerStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
@@ -122,6 +123,32 @@ module.exports.deleteItem = async (req, res) => {
   res.redirect(backURL);
 }
 
+
+// [GET] /admin/products/create ( Lấy giao diện -> nhấn "+ Thêm mới" bên index.pug )
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm mới sản phẩm"
+  });
+};
+
+// [POST] /admin/products/create ( Khi submit -> nhấn "Tạo mới" )
+module.exports.createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+
+  if(req.body.position == "") { // Tự động tăng
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else { // Nhập thủ công
+    req.body.position = parseInt(req.body.position);
+  }
+
+  const product = new Product(req.body); // Tạo mới 1 sản phẩm
+  await product.save(); // Lưu vào database
+
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
 
 
 /* Note
