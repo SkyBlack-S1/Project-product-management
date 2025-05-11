@@ -1,4 +1,5 @@
 // [------------------- Xử lý phía FE -------------------] //
+// --------- Có thể dùng chung cho nhiều trang --------- //
 /* Button Status ( Phần Bộ Lọc ) */
 const buttonStatus = document.querySelectorAll("[button-status]"); // thuộc tính tự định nghĩa nên cần []
 if(buttonStatus.length > 0) {
@@ -153,3 +154,17 @@ if(showAlert) {
   });
 }
 /* End Show Alert ( Hiển thị thông báo ) */
+
+/* Upload Image & Preview */
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]");
+  const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  uploadImageInput.addEventListener("change", (e) => { // uploadImageInput cx chính là e.target
+    const file = e.target.files[0];
+    if(file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+}
+/* End Upload Image & Preview */
