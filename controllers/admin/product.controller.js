@@ -133,6 +133,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create ( Khi submit -> nhấn "Tạo mới" )
 module.exports.createPost = async (req, res) => {
+  
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
@@ -144,7 +145,9 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
-  req.body.thumbnail = `/uploads/${req.file.filename}`;
+  if(req.file) { // User có thể thêm mới sản phẩm mà không bắt buộc phải nhập ảnh
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
 
   const product = new Product(req.body); // Tạo mới 1 sản phẩm
   await product.save(); // Lưu vào database
