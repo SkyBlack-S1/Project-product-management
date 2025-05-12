@@ -248,10 +248,10 @@ module.exports.detail = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/products`);
   }
 };
-
-
-
 /* ---------------- End Chi tiết 1 sản phẩm ---------------- */
+
+
+
 
 /* Note
 Truy vấn... -> Doc Mongoose
