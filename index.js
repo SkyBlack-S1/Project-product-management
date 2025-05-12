@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config(); // nhúng dotenv
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const indexRoute = require("./routes/client/index.route");
@@ -7,7 +8,6 @@ const systemConfig = require("./config/system");
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-require('dotenv').config(); // nhúng dotenv
 
 
 const database = require("./config/database");

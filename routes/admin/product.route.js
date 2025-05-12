@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const multer  = require('multer'); // hỗ trợ upload ảnh
-const storageMulter = require("../../helpers/storageMulter");
-const upload = multer({ storage: storageMulter() }); 
+const multer = require("multer"); // hỗ trợ upload ảnh
+// const storageMulter = require("../../helpers/storageMulter");
 
+const upload = multer();
 
 const controller = require("../../controllers/admin/product.controller");
 const validate = require("../../validates/admin/product.validate");
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware");
 
 router.get("/", controller.index);
 
@@ -19,8 +20,9 @@ router.delete("/delete/:id", controller.deleteItem);
 router.get("/create", controller.create); // lấy ra giao diện
 
 router.post(
-  "/create", 
-  upload.single("thumbnail"), 
+  "/create",
+  upload.single("thumbnail"),
+  uploadCloud.upload,
   validate.createPost,
   controller.createPost
 );
@@ -28,7 +30,7 @@ router.post(
 router.get("/edit/:id", controller.edit);
 
 router.patch(
-  "/edit/:id", 
+  "/edit/:id",
   upload.single("thumbnail"),
   validate.createPost,
   controller.editPatch
