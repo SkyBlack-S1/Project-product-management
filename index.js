@@ -23,7 +23,7 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Template Engines (PUG)
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // Flash -> Hỗ trợ hiển thị thông báo
@@ -35,7 +35,7 @@ app.use(flash());
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục chỉ tồn tại trong tất cả file .pug
 
 // Trong file Public -> Người dùng có thể truy cập
-app.use(express.static("public")); // Trong file pug chỉ cần "/" là sẽ đi vào folder "public/"
+app.use(express.static(`${__dirname}/public`)); // Trong file pug chỉ cần "/" là sẽ đi vào folder "public/"
 
 // Routes
 indexRoute(app);
