@@ -226,6 +226,33 @@ module.exports.editPatch = async (req, res) => {
 /* ---------------- End Chỉnh sửa 1 sản phẩm ---------------- */
 
 
+/* ---------------- Chi tiết 1 sản phẩm ---------------- */
+// [GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const product = await Product.findOne(find);
+    
+    console.log(product);
+    
+    res.render("admin/pages/products/detail", {
+      pageTitle: `${product.title}`,
+      product: product,
+    });
+  } catch (error) {
+    req.flash("error", `Không tìm thấy sản phẩm!`);
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+};
+
+
+
+/* ---------------- End Chi tiết 1 sản phẩm ---------------- */
+
 /* Note
 Truy vấn... -> Doc Mongoose
 Cú pháp... -> Doc ExpressJS
