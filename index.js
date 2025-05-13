@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config(); // nhúng dotenv
+const path = require('path');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const indexRoute = require("./routes/client/index.route");
@@ -30,6 +31,12 @@ app.set("view engine", "pug");
 app.use(cookieParser("HUYENCUTEPHOMAIQUE"));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+// TinyMCE
+app.use(
+  '/tinymce', 
+  express.static(path.join(__dirname, 'node_modules', 'tinymce'))
+);
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục chỉ tồn tại trong tất cả file .pug
