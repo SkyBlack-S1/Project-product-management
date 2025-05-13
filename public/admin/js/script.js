@@ -21,6 +21,7 @@ if(buttonStatus.length > 0) {
 }
 /* End Button Status */
 
+
 /* Form Search ( Phần Tìm Kiếm ) */
 const formSearch = document.querySelector("#form-search");
 if(formSearch) {
@@ -40,6 +41,7 @@ if(formSearch) {
 }
 /* End Form Search */
 
+
 /* Button Pagination ( Phần Phân Trang ) */
 const buttonsPagination = document.querySelectorAll("[button-pagination]");
 if(buttonsPagination) {
@@ -56,6 +58,7 @@ if(buttonsPagination) {
   })
 }
 /* End Button Pagination */
+
 
 /* --------- Thay đổi trạng thái nhiều sản phẩm --------- */
 /* Checkbox Multi */
@@ -139,6 +142,7 @@ if(formChangeMulti) {
 /* End Form Change Multi */
 /* --------- End Thay đổi trạng thái nhiều sản phẩm --------- */
 
+
 /* Show Alert ( Hiển thị thông báo ) */
 const showAlert = document.querySelector("[show-alert]");
 if(showAlert) {
@@ -155,6 +159,7 @@ if(showAlert) {
 }
 /* End Show Alert ( Hiển thị thông báo ) */
 
+
 /* Upload Image & Preview */
 const uploadImage = document.querySelector("[upload-image]");
 if(uploadImage) {
@@ -168,3 +173,41 @@ if(uploadImage) {
   });
 }
 /* End Upload Image & Preview */
+
+
+/* Sort SP theo các tiêu chí */
+const sort = document.querySelector("[sort]");
+if(sort) {
+  let url = new URL(window.location.href);
+
+  const sortSelect = sort.querySelector("[sort-select]");
+  const sortClear = sort.querySelector("[sort-clear]");
+
+  // Sắp xếp theo position, price, title
+  sortSelect.addEventListener("change", (e) => {
+    const value = e.target.value;
+    const [sortKey, sortValue] = value.split("-");
+
+    url.searchParams.set("sortKey", sortKey);
+    url.searchParams.set("sortValue", sortValue);
+    window.location.href = url.href; //chuyển hướng sẽ load lại web
+  });
+
+  // Clear
+  sortClear.addEventListener("click", () => {
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
+    window.location.href = url.href;
+  });
+
+  // Thêm selected=true cho option (Nếu không chọn thì mặc định sẽ chọn option đầu tiên)
+  const sortKey = url.searchParams.get("sortKey");
+  const sortValue = url.searchParams.get("sortValue");
+
+  if(sortKey && sortValue) {
+    const stringSort = `${sortKey}-${sortValue}`;
+    const optionSelected = sortSelect.querySelector(`option[value='${stringSort}']`);
+    optionSelected.selected = true;
+  }
+}
+/* End Sort SP theo các tiêu chí */

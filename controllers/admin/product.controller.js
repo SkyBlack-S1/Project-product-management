@@ -37,8 +37,18 @@ module.exports.index = async (req, res) => {
   );
   /* End Tính năng phân trang */
 
+  /* Sort SP theo các tiêu chí */
+  let sort = {};
+
+  if(req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "desc"; // mặc định không yc gì thì sắp xếp theo vị trí giảm dần
+  }
+  /* End Sort SP theo các tiêu chí */
+
   const products = await Product.find(find)
-    .sort({ position: "desc" })
+    .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
