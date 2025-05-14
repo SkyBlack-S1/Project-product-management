@@ -1,0 +1,10 @@
+//- Xử lý phân cấp các danh mục bên trang create.pug
+mixin select-tree(items, level = 1)
+  each item in items
+    - const prefix = Array(level + 1).join("-- ")
+    option(value=item.id) #{prefix}#{item.title}
+      if item.children && item.children.length > 0
+        +select-tree(item.children, level + 1)
+//- Array (level + 1) <=> Array (1 + 1) <=> Array(2)
+  Tức là tạo ra 1 Mảng gồm 2 phần tử rỗng, sau đó join("-- "), tức là thêm "-- " vào giữa 2 phần tử rỗng 
+  -> Tạo ra 1 khoảng "-- ". Tương tự vậy với Array(3), Array(4)...
