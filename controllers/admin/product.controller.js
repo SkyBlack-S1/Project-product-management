@@ -54,7 +54,7 @@ module.exports.index = async (req, res) => {
 
   res.render("admin/pages/products/index", {
     // hiển thị ra views
-    pageTitle: "Trang sản phẩm",
+    pageTitle: "Trang danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
