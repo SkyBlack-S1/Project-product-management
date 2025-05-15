@@ -42,7 +42,7 @@ module.exports.index = async (req, res) => {
   /* Sort SP theo các tiêu chí */
   let sort = {};
 
-  if(req.query.sortKey && req.query.sortValue) {
+  if (req.query.sortKey && req.query.sortValue) {
     sort[req.query.sortKey] = req.query.sortValue;
   } else {
     sort.position = "desc"; // mặc định không yc gì thì sắp xếp theo vị trí giảm dần
@@ -64,7 +64,6 @@ module.exports.index = async (req, res) => {
   });
 };
 
-
 /* Thay đổi trạng thái sản phẩm -> Update Database */
 // [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
@@ -78,7 +77,6 @@ module.exports.changeStatus = async (req, res) => {
   const backURL = req.header("Referer"); // Chuyển hướng sang trang trước đó
   res.redirect(backURL);
 };
-
 
 /* Thay đổi trạng thái [nhiều] sản phẩm -> Update Database */
 // [PATCH] /admin/products/change-multi
@@ -136,7 +134,6 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect(backURL);
 };
 
-
 /* Xóa 1 sản phẩm (Xóa vĩnh viễn (cứng) hoặc xóa mềm) */
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
@@ -154,7 +151,6 @@ module.exports.deleteItem = async (req, res) => {
   const backURL = req.header("Referer");
   res.redirect(backURL);
 };
-
 
 /* ---------------- Thêm 1 sản phẩm ---------------- */
 // [GET] /admin/products/create ( Lấy giao diện -> nhấn "+ Thêm mới" bên index.pug )
@@ -192,7 +188,6 @@ module.exports.createPost = async (req, res) => {
 };
 /* ---------------- End Thêm 1 sản phẩm ---------------- */
 
-
 /* ---------------- Chỉnh sửa 1 sản phẩm ---------------- */
 // [GET] /admin/products/edit/:id
 module.exports.edit = async (req, res) => {
@@ -205,9 +200,15 @@ module.exports.edit = async (req, res) => {
 
     const product = await Product.findOne(find);
 
+    const category = await ProductCategory.find({
+      deleted: false,
+    });
+    const newCategory = createTreeHelper.tree(category);
+
     res.render("admin/pages/products/edit", {
       pageTitle: "Chỉnh sửa sản phẩm",
       product: product,
+      category: newCategory,
     });
   } catch (error) {
     req.flash("error", `Không tìm thấy sản phẩm!`);
@@ -234,7 +235,6 @@ module.exports.editPatch = async (req, res) => {
 };
 /* ---------------- End Chỉnh sửa 1 sản phẩm ---------------- */
 
-
 /* ---------------- Chi tiết 1 sản phẩm ---------------- */
 // [GET] /admin/products/detail/:id
 module.exports.detail = async (req, res) => {
@@ -245,9 +245,9 @@ module.exports.detail = async (req, res) => {
     };
 
     const product = await Product.findOne(find);
-    
+
     console.log(product);
-    
+
     res.render("admin/pages/products/detail", {
       pageTitle: `${product.title}`,
       product: product,
@@ -258,9 +258,6 @@ module.exports.detail = async (req, res) => {
   }
 };
 /* ---------------- End Chi tiết 1 sản phẩm ---------------- */
-
-
-
 
 /* Note
 Truy vấn... -> Doc Mongoose
