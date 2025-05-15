@@ -1,9 +1,11 @@
 // [------------------- Xử lý phía BE -------------------] //
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category.model");
 const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filerStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const createTreeHelper = require("../../helpers/createTree");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -157,8 +159,14 @@ module.exports.deleteItem = async (req, res) => {
 /* ---------------- Thêm 1 sản phẩm ---------------- */
 // [GET] /admin/products/create ( Lấy giao diện -> nhấn "+ Thêm mới" bên index.pug )
 module.exports.create = async (req, res) => {
+  const category = await ProductCategory.find({
+    deleted: false,
+  });
+  const newCategory = createTreeHelper.tree(category);
+
   res.render("admin/pages/products/create", {
     pageTitle: "Thêm mới sản phẩm",
+    category: newCategory,
   });
 };
 
