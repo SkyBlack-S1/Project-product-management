@@ -10,6 +10,7 @@ const accountSchema = new mongoose.Schema(
       type: String,
       default: generateHelper.generateRandomString(20)
     }, 
+    phone: String,
     avatar: String,
     role_id: String,
     status: String,
