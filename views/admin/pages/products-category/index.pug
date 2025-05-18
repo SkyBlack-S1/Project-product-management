@@ -2,34 +2,37 @@ extends ../../layouts/default.pug
 include ../../mixins/table-tree.pug
 
 block main
-  
-  h1 Trang danh mục sản phẩm
+  if(role.permissions.includes("products-category_view"))
+    h1 Trang danh mục sản phẩm
 
-  .card.mb-3 
-    .card-header Danh sách
-      .card-body
-        .row
-          .col-8
-          .col-4 
-            a(
-              href=`${prefixAdmin}/products-category/create`
-              class="btn btn-outline-success mb-4"
-            ) + Thêm mới
+    .card.mb-3 
+      .card-header Danh sách
+        .card-body
+          .row
+            .col-8
+            .col-4 
+              if(role.permissions.includes("products-category_create"))
+                a(
+                  href=`${prefixAdmin}/products-category/create`
+                  class="btn btn-outline-success mb-4"
+                ) + Thêm mới
 
-        table(
-          class="table table-hover table-sm"
-          checkbox-multi
-        )
-          thead 
-            tr
-              th 
-                input(type="checkbox" name="checkall") 
-              th STT 
-              th Hình ảnh
-              th Tiêu đề
-              th Vị trí
-              th Trạng thái
-              th Hành động
+          table(
+            class="table table-hover table-sm"
+            checkbox-multi
+          )
+            thead 
+              tr
+                th 
+                  input(type="checkbox" name="checkall") 
+                th STT 
+                th Hình ảnh
+                th Tiêu đề
+                th Vị trí
+                th Trạng thái
+                th Hành động
 
-          tbody 
-            +table-tree(records)
+            tbody 
+              +table-tree(records)
+  else 
+    h1 Bạn không có quyền truy cập trang danh mục
