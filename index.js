@@ -7,6 +7,7 @@ const indexRoute = require("./routes/client/index.route");
 const adminRoute = require("./routes/admin/index.route");
 const systemConfig = require("./config/system");
 const flash = require('express-flash');
+const moment = require('moment');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -40,6 +41,7 @@ app.use(
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin; // Biến toàn cục chỉ tồn tại trong tất cả file .pug
+app.locals.moment = moment;
 
 // Trong file Public -> Người dùng có thể truy cập
 app.use(express.static(`${__dirname}/public`)); // Trong file pug chỉ cần "/" là sẽ đi vào folder "public/"

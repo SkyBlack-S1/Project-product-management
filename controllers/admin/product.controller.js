@@ -1,6 +1,7 @@
 // [------------------- Xử lý phía BE -------------------] //
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
 const systemConfig = require("../../config/system");
 const filterStatusHelper = require("../../helpers/filerStatus");
 const searchHelper = require("../../helpers/search");
@@ -54,6 +55,16 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
+  for (const product of products) {
+    const user = await Account.findOne({ // Ở mỗi sp sẽ duyệt qua từng account để tìm xem account nào có id trùng với account_id
+      _id: product.createdBy.account_id
+    });
+
+    if(user){
+      product.accountFullName = user.fullName;
+    }
+  }
+
   res.render("admin/pages/products/index", {
     // hiển thị ra views
     pageTitle: "Trang danh sách sản phẩm",
@@ -63,6 +74,7 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination,
   });
 };
+
 
 /* Thay đổi trạng thái sản phẩm -> Update Database */
 // [PATCH] /admin/products/change-status/:status/:id
@@ -77,6 +89,7 @@ module.exports.changeStatus = async (req, res) => {
   const backURL = req.header("Referer"); // Chuyển hướng sang trang trước đó
   res.redirect(backURL);
 };
+
 
 /* Thay đổi trạng thái [nhiều] sản phẩm -> Update Database */
 // [PATCH] /admin/products/change-multi
@@ -134,6 +147,7 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect(backURL);
 };
 
+
 /* Xóa 1 sản phẩm (Xóa vĩnh viễn (cứng) hoặc xóa mềm) */
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
@@ -151,6 +165,7 @@ module.exports.deleteItem = async (req, res) => {
   const backURL = req.header("Referer");
   res.redirect(backURL);
 };
+
 
 /* ---------------- Thêm 1 sản phẩm ---------------- */
 // [GET] /admin/products/create ( Lấy giao diện -> nhấn "+ Thêm mới" bên index.pug )
@@ -181,12 +196,17 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
+  req.body.createdBy = {
+    account_id: res.locals.user.id
+  };
+
   const product = new Product(req.body); // Tạo mới 1 sản phẩm
   await product.save(); // Lưu vào database
 
   res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
 /* ---------------- End Thêm 1 sản phẩm ---------------- */
+
 
 /* ---------------- Chỉnh sửa 1 sản phẩm ---------------- */
 // [GET] /admin/products/edit/:id
@@ -235,6 +255,7 @@ module.exports.editPatch = async (req, res) => {
 };
 /* ---------------- End Chỉnh sửa 1 sản phẩm ---------------- */
 
+
 /* ---------------- Chi tiết 1 sản phẩm ---------------- */
 // [GET] /admin/products/detail/:id
 module.exports.detail = async (req, res) => {
@@ -258,6 +279,7 @@ module.exports.detail = async (req, res) => {
   }
 };
 /* ---------------- End Chi tiết 1 sản phẩm ---------------- */
+
 
 /* Note
 Truy vấn... -> Doc Mongoose

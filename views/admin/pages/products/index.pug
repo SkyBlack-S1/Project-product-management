@@ -8,6 +8,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 block main
   if(role.permissions.includes("products_view"))
     +alert-success(5000)
@@ -59,6 +60,7 @@ block main
                 th Giá
                 th Vị trí
                 th Trạng thái
+                th Người tạo
                 th Hành động
 
             tbody 
@@ -117,6 +119,11 @@ block main
                         span(class="badge badge-success") Hoạt động
                       else
                         span(class="badge badge-danger") Dừng Hoạt động
+                  
+                  td 
+                    p #{item.accountFullName}
+                    p 
+                      +formatDate(item.createdBy.createdAt)
 
                   td 
                     a(
