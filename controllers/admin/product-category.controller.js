@@ -86,3 +86,35 @@ module.exports.editPatch = async (req, res) => {
 
   res.redirect(req.header("Referer"));
 };
+
+
+/* ---------------- Chi tiết 1 danh mục sản phẩm ---------------- */
+// [GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const record = await ProductCategory.findOne(find);
+
+    if(record.parent_id){
+      const parent = await ProductCategory.findOne({deleted: false, _id: record.parent_id});
+      record.titleParent = parent.title;
+    }
+    
+
+    console.log(record);
+
+    res.render("admin/pages/products-category/detail", {
+      pageTitle: `${record.title}`,
+      record: record,
+    });
+
+  } catch (error) {
+    req.flash("error", `Không tìm thấy danh mục sản phẩm!`);
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  }
+};
+/* ---------------- Chi tiết 1 danh mục sản phẩm ---------------- */

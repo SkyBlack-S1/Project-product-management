@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  if(role.permissions.includes("products_view"))
+    +alert-error(5000)
+    
+    if (record.title)
+      h1(class="mb-4") #{record.title}
+
+    if (record.titleParent)
+      div(class="mb-4") Danh mục cha: <b>#{record.titleParent}</b>
+
+    if (record.thumbnail)
+      div(class="mb-4")
+        img(
+          src=record.thumbnail
+          style="width: 100px"
+        )
+    
+    if (record.status)
+      div(class="mb-4")
+        span Trạng thái: 
+        if (record.status === "active")
+          span(class="badge badge-success") Hoạt động
+        else 
+          span(class="badge badge-danger") Dừng hoạt động
+    
+    if (record.position)
+      div(class="mb-4") Vị trí: <b>#{record.position}</b>
+
+    if (record.description)
+      div(class="mb-4") !{record.description}
+
+    a(
+      href=`${prefixAdmin}/products-category/edit/${record.id}`
+      class="btn btn-warning btn-sm"
+    ) Sửa
