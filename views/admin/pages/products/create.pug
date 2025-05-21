@@ -34,6 +34,26 @@ block main
           if(category)
             +select-tree(category)    
 
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="featured1"
+          name="featured"
+          value="1"
+        )
+        label(for="featured1" class="form-check-label") Nổi bật
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="featured0"
+          name="featured"
+          value="0"
+          checked
+        )
+        label(for="featured0" class="form-check-label") Không
+
       div(class="form-group")
         label(for="desc") Mô tả
         textarea(
@@ -42,6 +62,7 @@ block main
           name="description"
           row="5"
         )
+      
       div(class="form-group")
         label(for="price") Giá
         input(
@@ -52,6 +73,7 @@ block main
           value="0"
           min="0"
         )
+      
       div(class="form-group")
         label(for="discount") % Giảm giá
         input(
@@ -62,6 +84,7 @@ block main
           value="0"
           min="0"
         )
+      
       div(class="form-group")
         label(for="stock") Số lượng
         input(
@@ -72,6 +95,7 @@ block main
           value="0"
           min="0"
         )
+      
       div(
         class="form-group"
         upload-image
@@ -90,6 +114,7 @@ block main
           upload-image-preview
           class="image-preview"
         )
+      
       div(class="form-group")
         label(for="position") Vị trí
         input(
@@ -100,6 +125,7 @@ block main
           placeholder="Tự động tăng"
           min="1"
         )
+      
       div(class="form-group form-check form-check-inline")
         input(
           type="radio"
@@ -119,6 +145,7 @@ block main
           value="inactive"
         )
         label(for="statusInActive" class="form-check-label") Dừng hoạt động
+      
       div(class="form-group")
         button(
           type="submit"
