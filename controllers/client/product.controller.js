@@ -17,7 +17,7 @@ module.exports.index = async (req, res) => {
     return item;
   });
 
-  console.log(newProducts);
+  // console.log(newProducts);
 
   res.render("client/pages/products/index", {
     pageTitle: "Trang sản phẩm",
@@ -37,7 +37,7 @@ module.exports.detail = async (req, res) => {
 
     const product = await Product.findOne(find);
 
-    console.log(product);
+    // console.log(product);
 
     res.render("client/pages/products/detail", {
       pageTitle: `${product.title}`,

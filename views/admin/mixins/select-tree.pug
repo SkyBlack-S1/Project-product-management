@@ -1,7 +1,7 @@
 //- Xử lý phân cấp các danh mục bên trang create.pug
 mixin select-tree(items, level = 1, parent_id = "")
   each item in items
-    - const prefix = Array(level + 1).join("-- ")
+    - const prefix = Array(level + 1).join("--- ")
     option(
       value=item.id
       selected=(item.id == parent_id ? true : false )

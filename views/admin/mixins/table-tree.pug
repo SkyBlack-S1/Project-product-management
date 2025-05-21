@@ -1,7 +1,7 @@
 //- Xử lý phân cấp các danh mục bên trang index.pug
 mixin table-tree(items, level = 1)
   each item, index in items
-    - const prefix = Array(level + 1).join("-- ")
+    - const prefix = Array(level + 1).join("--- ")
     tr 
       td 
         input(
