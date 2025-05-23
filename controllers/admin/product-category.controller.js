@@ -1,6 +1,7 @@
 const ProductCategory = require("../../models/product-category.model");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
+const { permissions } = require("./role.controller");
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
@@ -38,18 +39,24 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
-  if (req.body.position == "") {
-    // Tự động tăng
-    const count = await ProductCategory.countDocuments();
-    req.body.position = count + 1;
-  } else {
-    // Nhập thủ công
-    req.body.position = parseInt(req.body.position);
-  }
-  const record = new ProductCategory(req.body); // Tạo mới 1 danh mục
-  await record.save();
+  const permissions = res.locals.role.permissions;
 
-  res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  if(permissions.includes("products-category_create")) {
+    if (req.body.position == "") { // Tự động tăng
+      const count = await ProductCategory.countDocuments();
+      req.body.position = count + 1;
+    } else { // Nhập thủ công
+      req.body.position = parseInt(req.body.position);
+    }
+    
+    const record = new ProductCategory(req.body); // Tạo mới 1 danh mục
+    await record.save();
+
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  
+  } else {
+    return;
+  }
 };
 
 // [GET] /admin/products-category/edit/:id
