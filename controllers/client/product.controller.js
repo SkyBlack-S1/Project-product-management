@@ -13,7 +13,7 @@ module.exports.index = async (req, res) => {
     deleted: false,
   }).sort({ position: "desc" });
 
-  const newProducts = productsHelper.priceNewProduct(products);
+  const newProducts = productsHelper.priceNewProducts(products);
 
   res.render("client/pages/products/index", {
     pageTitle: "Trang sản phẩm",
@@ -23,21 +23,31 @@ module.exports.index = async (req, res) => {
 
 
 /* ---------------- Chi tiết 1 sản phẩm cho Client ---------------- */
-// [GET] /products/:slug
+// [GET] /products/detail/:slugProduct
 module.exports.detail = async (req, res) => {
   try {
     const find = {
       deleted: false,
-      slug: req.params.slug,
+      slug: req.params.slugProduct,
       status: "active"
     };
 
     const product = await Product.findOne(find);
 
-    // console.log(product);
+    if(product.product_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.product_category_id,
+        status: "active",
+        deleted: false
+      });
+
+      product.category = category;
+    }
+
+    product.priceNew = productsHelper.priceNewProduct(product);
 
     res.render("client/pages/products/detail", {
-      pageTitle: `${product.title}`,
+      pageTitle: product.title,
       product: product,
     });
   } catch (error) {
@@ -69,7 +79,7 @@ module.exports.category = async (req, res) => {
     deleted: false
   }).sort({position: "desc"});
 
-  const newProducts = productsHelper.priceNewProduct(products);
+  const newProducts = productsHelper.priceNewProducts(products);
 
   res.render("client/pages/products/index", {
     pageTitle: `${category.title}`,

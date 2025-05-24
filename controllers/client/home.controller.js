@@ -9,7 +9,7 @@ module.exports.index = async (req, res) => { // index là tên hàm thể hiện
     featured: "1",
     status: "active"
   }).limit(6);
-  const newProductsFeatured = productsHelper.priceNewProduct(productsFeatured);
+  const newProductsFeatured = productsHelper.priceNewProducts(productsFeatured);
   // End Lấy ra DS sp nổi bật
 
   // Lấy ra DS sp mới nhất
@@ -17,7 +17,7 @@ module.exports.index = async (req, res) => { // index là tên hàm thể hiện
     deleted: false,
     status: "active"
   }).sort({position: "desc"}).limit(6);
-  const newProductsNew = productsHelper.priceNewProduct(productsNew);
+  const newProductsNew = productsHelper.priceNewProducts(productsNew);
   // End Lấy ra DS sp mới nhất
 
   res.render("client/pages/home/index", {

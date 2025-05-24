@@ -7,6 +7,6 @@ router.get("/", controller.index);
 
 router.get("/:slugCategory", controller.category);
 
-// router.get("/:slug", controller.detail); // slug (có unique) đã là duy nhất nên không cần thêm id
+router.get("/detail/:slugProduct", controller.detail); // slug (có unique) đã là duy nhất nên không cần thêm id
 
 module.exports = router;
