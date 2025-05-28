@@ -1,10 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
-include ../../mixins/alert.pug
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
 
   .container.my-3
     .row
@@ -44,7 +41,7 @@ block main
                       name="quantity"
                       value=item.quantity
                       min="1"
-                      item-id=item.product_id
+                      product-id=item.product_id
                       style="width: 60px"
                     )
                   
@@ -63,3 +60,5 @@ block main
 
         div(class="text-right mt-3")
           a(href="/checkout" class="btn btn-success") THANH TOÁN
+  
+  script(src="/js/cart.js")
