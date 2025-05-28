@@ -17,6 +17,7 @@ const orderSchema = new mongoose.Schema(
         quantity: Number,
       }
     ],
+    // status: "initial" "cancel" "confirm", // Tự làm thêm tính năng Hủy đơn hàng
     deleted: {
       type: Boolean,
       default: false
