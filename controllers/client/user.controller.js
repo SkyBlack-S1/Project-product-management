@@ -120,5 +120,70 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
   // Nếu tồn tại email thì gửi mã OTP qua email
 
-  res.send("ok");
+
+  
+  res.redirect(`/user/password/otp?email=${email}`);
+};
+
+
+// [GET] /user/password/otp
+module.exports.otpPassword = async (req, res) => {
+  const email = req.query.email;
+  
+  res.render("client/pages/user/otp-password", {
+    pageTitle: "Nhập mã OTP",
+    email: email,
+  });
+};
+
+
+// [POST] /user/password/otp
+module.exports.otpPasswordPost = async (req, res) => {
+  const email = req.body.email;
+  const otp = req.body.otp;
+
+  const result = await ForgotPassword.findOne({
+    email: email,
+    otp: otp
+  });
+
+  if(!result) {
+    req.flash("error", "OTP không hợp lệ!");
+    res.redirect(req.header("Referer"));
+    return;
+  }
+
+  // Khi user nhập đúng mã OTP
+  const user = await User.findOne({
+    email: email
+  });
+
+  res.cookie("tokenUser", user.tokenUser); // sau dùng để xác định tài khoản cần đổi mật khẩu
+  // Bản chất nếu trước đó người dùng đăng nhập thành công thì vẫn có thể đổi mật khẩu mà không cần mã OTP
+
+  res.redirect(`/user/password/reset`);
+};
+
+
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+  res.render("client/pages/user/reset-password", {
+    pageTitle: "Đổi mật khẩu",
+  });
+};
+
+
+// [POST] /user/password/reset
+module.exports.resetPasswordPost = async (req, res) => {
+  const password = req.body.password;
+  const tokenUser = req.cookies.tokenUser;
+
+  await User.updateOne({
+    tokenUser: tokenUser
+  }, {
+    password: md5(password)
+  });
+
+  req.flash("success", "Đổi mật khẩu thành công!");
+  res.redirect("/");
 };

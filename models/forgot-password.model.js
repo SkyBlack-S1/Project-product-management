@@ -6,7 +6,7 @@ const forgotPasswordSchema = new mongoose.Schema(
     otp: String,
     expireAt: {
       type: Date,
-      expires: 180 // Document sẽ tự động xóa sau 180s
+      expires: 180 // Document sẽ tự động bị xóa sau 180s
     }
   }, 
   {
