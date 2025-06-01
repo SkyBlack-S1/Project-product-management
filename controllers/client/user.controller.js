@@ -1,5 +1,6 @@
 const User = require("../../models/users.model");
 const ForgotPassword = require("../../models/forgot-password.model");
+const Cart = require("../../models/cart.model");
 const md5 = require("md5");
 const generateHelper = require("../../helpers/generate");
 const sendMailHelper = require("../../helpers/sendMail");
@@ -12,7 +13,7 @@ module.exports.register = async (req, res) => {
 };
 
 
-// [POST] /user/registerPost
+// [POST] /user/register
 module.exports.registerPost = async (req, res) => {
   const existEmail = await User.findOne({
     email: req.body.email
@@ -43,7 +44,7 @@ module.exports.login = async (req, res) => {
 };
 
 
-// [POST] /user/loginPost
+// [POST] /user/login
 module.exports.loginPost = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -70,6 +71,15 @@ module.exports.loginPost = async (req, res) => {
     res.redirect(req.header("Referer"));
     return;
   }
+
+  // console.log(req.cookies.cartId);
+  // console.log(user.id);
+
+  await Cart.updateOne({
+    _id: req.cookies.cartId
+  }, {
+    user_id: user.id
+  });
 
   res.cookie("tokenUser", user.tokenUser);
 
