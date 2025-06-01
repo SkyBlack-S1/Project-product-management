@@ -84,6 +84,9 @@ module.exports.logout = async (req, res) => {
 };
 
 
+
+
+//---------------- Quên mật khẩu ---------------//
 // [GET] /user/password/forgot
 module.exports.forgotPassword = async (req, res) => {
   res.render("client/pages/user/forgot-password", {
@@ -190,4 +193,14 @@ module.exports.resetPasswordPost = async (req, res) => {
 
   req.flash("success", "Đổi mật khẩu thành công!");
   res.redirect("/");
+};
+//---------------- End Quên mật khẩu ---------------//
+
+
+
+// [GET] /user/info
+module.exports.info = async (req, res) => {
+  res.render("client/pages/user/info", {
+    pageTitle: "Thông tin tài khoản"
+  });
 };
