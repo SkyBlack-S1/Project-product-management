@@ -245,3 +245,100 @@
   cursor: pointer;
 }
 /* End Show Alert */
+
+/* Chat */
+/* Đoạn này tự code vì không thấy được code trên video */
+.chat {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  height: auto;
+}
+
+.chat .inner-body {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chat .inner-incoming {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.chat .inner-incoming .inner-name {
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 3px;
+}
+
+.chat .inner-incoming .inner-content {
+  background: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 15px 15px 15px 0;
+  max-width: 80%;
+  font-size: 14px;
+  color: #000;
+}
+
+.chat .inner-outgoing {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.chat .inner-outgoing .inner-content {
+  background: #FE5DA3;
+  padding: 8px 12px;
+  border-radius: 15px 15px 0 15px;
+  max-width: 80%;
+  font-size: 14px;
+  color: #fff;
+}
+
+.chat .inner-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat .inner-body::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.chat .inner-body::-webkit-scrollbar-track {
+  background-color: #f9f9f9;
+}
+/* End Đoạn này tự code vì không thấy được code trên video */
+
+.chat .inner-foot {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+}
+
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-form input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form button {
+  border-radius: 15px;
+  border: 1px solid #FE5DA3;
+  background: #FE5DA3;
+  color: #fff;
+  height: 32px;
+  padding: 0 30px;
+  cursor: pointer;
+}
+/* End Chat */
